@@ -1,6 +1,4 @@
 #pragma once 
 
-#include <unistd.h>
-
-const char *students_database_file = "/Data/students.dat";
-const char *teachers_database_file = "/Data/teachers.dat";
+#define STUDENTS_DATABASE_FILE "/Data/students.dat"
+#define TEACHERS_DATABASE_FILE "/Data/teachers.dat"
