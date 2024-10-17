@@ -8,8 +8,8 @@
 #define MAX_PERSON_LINE_LENGTH 550
 
 #define ENTITY_SEPARATOR 10
-#define ENTITY_INDEXER_SEPARATOR 29
-
+#define ENTITY_INDEXER_SEPARATOR 62
+// 155
 char *get_database_prefix() { return getcwd(NULL, 0); }
 char *concat_database_file_name(const char *file) {
   char *database_prefix = get_database_prefix();
@@ -55,27 +55,35 @@ int persist_person(const char *file, Person person) {
 
   char *entity_indexer = generate_person_indexer(person);
   char *entity_persistence_buffer =
-      malloc(strlen(serialized_person_buffer) + strlen(entity_indexer) + 1);
+      malloc(sizeof(serialized_person_buffer) + sizeof(entity_indexer) + sizeof(char));
+
+  int result = 0;
 
   if (!entity_persistence_buffer) {
     printf("ERROR: Failed to allocate memory for entity persistence buffer");
-    return 1;
+    result = 1;
   }
 
-  sprintf(entity_persistence_buffer, "%s%s", entity_indexer,
-          serialized_person_buffer);
+  sprintf(entity_persistence_buffer, "%s%s%c", entity_indexer,
+          serialized_person_buffer, ENTITY_SEPARATOR);
 
   if (file_pointer)
     fputs(entity_persistence_buffer, file_pointer);
   else {
     printf("ERROR: Failed to open file %s", final_file_name);
-    return 2;
+    result = 2;
   }
+
+  fclose(file_pointer);
 
   return 0;
 }
 
 int get_all_persons(const char *file, Person persons[]) {
+  char *entity_indexer_separator_buffer = malloc(sizeof(char));
+
+  sprintf(entity_indexer_separator_buffer, "%c", ENTITY_INDEXER_SEPARATOR);
+
   char *final_file_name = concat_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
@@ -91,11 +99,28 @@ int get_all_persons(const char *file, Person persons[]) {
   do {
     Person person;
 
-    person_from_persistence(&person, content);
-    persons[amount] = person;
+    int part_index;
+    char* effective_content;
 
-    amount++;
+    char* token = strtok(content, entity_indexer_separator_buffer);
+
+    while (token != NULL) {
+      if (part_index == 1) {
+        puts(token);
+        person_from_persistence(&person, token);
+        persons[amount] = person;
+
+        amount++;
+      }
+
+      part_index++;
+      token = strtok(NULL, entity_indexer_separator_buffer);
+    }
+    
   } while (!feof(file_pointer));
+
+  free(entity_indexer_separator_buffer);
+  fclose(file_pointer);
 
   return amount;
 }

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "../../../Constants/PersonConstants.h"
 #include "../../../Persistence/PersonPersistence.h"
 #include "../../DefaultView.h"
 #include "../../Utils/ClearScreen.h"
@@ -19,7 +20,7 @@ void handle_list_students() {
   printf("Listagem de Alunos\n");
   printf("\n");
 
-  int amount = get_all_persons(students_database_file, students);
+  int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
 
   if (amount > 0)
     for (int i = 0; i < amount; i++) {

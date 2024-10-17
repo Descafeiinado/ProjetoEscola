@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "../../../Constants/PersonConstants.h"
+#include "../../../Mappers/PersonMapper.h"
 #include "../../../Persistence/PersonPersistence.h"
 #include "../../DefaultView.h"
 #include "../../Utils/ClearScreen.h"
@@ -108,7 +110,7 @@ void handle_create_student() {
   handle_input_student_gender(&student);
   handle_input_student_birthday(&student);
 
-  int persistence_result = persist_person(students_database_file, student);
+  int persistence_result = persist_person(STUDENTS_DATABASE_FILE, student);
 
   if (persistence_result) {
     switch (persistence_result) {

@@ -3,19 +3,21 @@
 #include <string.h>
 
 #include "../Entities/Person.h"
-
-#define ATTRIBUTE_SEPARATOR 31
+// 166
+#define ATTRIBUTE_SEPARATOR 59
 
 // Class generated with the help of the ChatGPT
 
 // Receive a Person and a serialized Person and reconstructs the Person
 void person_from_persistence(Person *person, char *content) {
-  char attribute_separator_character[] = {ATTRIBUTE_SEPARATOR};
+  char *attribute_separator_buffer = malloc(sizeof(char));
+
+  sprintf(attribute_separator_buffer, "%c", ATTRIBUTE_SEPARATOR);
 
   int index = 0;
   char *token;
 
-  token = strtok(content, attribute_separator_character);
+  token = strtok(content, attribute_separator_buffer);
 
   while (token != NULL) {
     switch (index) {
@@ -40,14 +42,14 @@ void person_from_persistence(Person *person, char *content) {
       break;
     }
 
-    token = strtok(NULL, attribute_separator_character);
+    token = strtok(NULL, attribute_separator_buffer);
     index++;
   }
+
+  free(attribute_separator_buffer);
 }
 
 void person_to_persistence(char *buffer, Person person) {
-  char attribute_separator_character[1] = {ATTRIBUTE_SEPARATOR};
-
   int size = MAX_REGISTRATION_SIZE + 1 + MAX_NAME_SIZE + 1 +
              MAX_IDENTIFICATION_SIZE + 1 + 2 + 10;
 
@@ -58,11 +60,12 @@ void person_to_persistence(char *buffer, Person person) {
     exit(EXIT_FAILURE);
   }
 
-  sprintf(content, "%s%s%s%s%s%s%c%s%s", person.registration,
-          attribute_separator_character, person.name,
-          attribute_separator_character, person.identification,
-          attribute_separator_character, person.gender[0],
-          attribute_separator_character, date_to_string(person.birthday));
+  sprintf(content, "%s%c%s%c%s%c%c%c%s",
+   person.registration, ATTRIBUTE_SEPARATOR,
+   person.name, ATTRIBUTE_SEPARATOR,
+   person.identification, ATTRIBUTE_SEPARATOR, 
+   person.gender[0], ATTRIBUTE_SEPARATOR,
+   date_to_string(person.birthday));
 
   strcat(content, "\0");
   strcpy(buffer, content);
