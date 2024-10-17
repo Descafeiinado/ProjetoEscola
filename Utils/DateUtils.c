@@ -48,13 +48,9 @@ void parse_date(const char *date_str, Date *date) {
 }
 
 char *date_to_string(Date date) {
-  char *buffer = malloc(11);
+  char *buffer;
 
-  if (buffer == NULL) {
-    perror("ERROR: Failed to allocate memory for date string");
-    exit(EXIT_FAILURE);
-  }
+  sprintf(buffer, "%02d/%02d/%04d", date.day, date.month, date.year);
 
-  snprintf(buffer, 11, "%02d/%02d/%04d", date.day, date.month, date.year);
   return buffer;
 }

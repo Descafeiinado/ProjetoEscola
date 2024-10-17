@@ -10,14 +10,11 @@
 
 // Receive a Person and a serialized Person and reconstructs the Person
 void person_from_persistence(Person *person, char *content) {
-  char *attribute_separator_buffer = malloc(sizeof(char));
-
-  sprintf(attribute_separator_buffer, "%c", ATTRIBUTE_SEPARATOR);
-
+  char attribute_separator_character[1] = {ATTRIBUTE_SEPARATOR};
   int index = 0;
   char *token;
 
-  token = strtok(content, attribute_separator_buffer);
+  token = strtok(content, attribute_separator_character);
 
   while (token != NULL) {
     switch (index) {
@@ -42,33 +39,27 @@ void person_from_persistence(Person *person, char *content) {
       break;
     }
 
-    token = strtok(NULL, attribute_separator_buffer);
+    token = strtok(NULL, attribute_separator_character);
     index++;
   }
-
-  free(attribute_separator_buffer);
 }
 
 void person_to_persistence(char *buffer, Person person) {
   int size = MAX_REGISTRATION_SIZE + 1 + MAX_NAME_SIZE + 1 +
              MAX_IDENTIFICATION_SIZE + 1 + 2 + 10;
-
-  char *content = malloc(size);
+  char content[size];
 
   if (content == NULL) {
     perror("Failed to allocate memory");
     exit(EXIT_FAILURE);
   }
 
-  sprintf(content, "%s%c%s%c%s%c%c%c%s",
+  sprintf(content, "%s%c%s%c%s%c%c%c%s\0",
    person.registration, ATTRIBUTE_SEPARATOR,
    person.name, ATTRIBUTE_SEPARATOR,
    person.identification, ATTRIBUTE_SEPARATOR, 
    person.gender[0], ATTRIBUTE_SEPARATOR,
    date_to_string(person.birthday));
 
-  strcat(content, "\0");
   strcpy(buffer, content);
-
-  free(content);
 }

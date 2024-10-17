@@ -13,28 +13,18 @@
 char *get_database_prefix() { return getcwd(NULL, 0); }
 char *concat_database_file_name(const char *file) {
   char *database_prefix = get_database_prefix();
-
-  char *database_file = malloc(strlen(database_prefix) + strlen(file) + 1);
-
-  if (!database_file) {
-    perror("ERROR: Failed to allocate memory for database file");
-    exit(EXIT_FAILURE);
-  }
+  int size = strlen(database_prefix) + strlen(file) + 1;
+  
+  char database_file[size];
 
   sprintf(database_file, "%s%s", database_prefix, file);
 
-  return database_file;
+  return *database_file;
 }
 
 char *generate_person_indexer0(char *registration) {
-  char *buffer = malloc(MAX_REGISTRATION_SIZE + 1);
-
-  if (!buffer) {
-    perror("ERROR: Failed to allocate memory for indexer");
-    exit(EXIT_FAILURE);
-  }
-
-  char entity_indexer_separator_character[1] = {ENTITY_INDEXER_SEPARATOR};
+  int size = MAX_REGISTRATION_SIZE + 1;
+  char buffer[size];
 
   sprintf(buffer, "%s%c", registration, ENTITY_INDEXER_SEPARATOR);
 
@@ -54,15 +44,14 @@ int persist_person(const char *file, Person person) {
   FILE *file_pointer = fopen(final_file_name, "a+");
 
   char *entity_indexer = generate_person_indexer(person);
-  char *entity_persistence_buffer =
-      malloc(sizeof(serialized_person_buffer) + sizeof(entity_indexer) + sizeof(char));
+
+  int entity_persistence_buffer_size =
+   (strlen(serialized_person_buffer) * sizeof(char)) +
+   (strlen(entity_indexer) * sizeof(char)) +
+   sizeof(char);
+  char entity_persistence_buffer[entity_persistence_buffer_size];
 
   int result = 0;
-
-  if (!entity_persistence_buffer) {
-    printf("ERROR: Failed to allocate memory for entity persistence buffer");
-    result = 1;
-  }
 
   sprintf(entity_persistence_buffer, "%s%s%c", entity_indexer,
           serialized_person_buffer, ENTITY_SEPARATOR);
@@ -80,9 +69,7 @@ int persist_person(const char *file, Person person) {
 }
 
 int get_all_persons(const char *file, Person persons[]) {
-  char *entity_indexer_separator_buffer = malloc(sizeof(char));
-
-  sprintf(entity_indexer_separator_buffer, "%c", ENTITY_INDEXER_SEPARATOR);
+  char entity_indexer_separator_character[1] = {ENTITY_INDEXER_SEPARATOR};
 
   char *final_file_name = concat_database_file_name(file);
 
@@ -102,7 +89,7 @@ int get_all_persons(const char *file, Person persons[]) {
     int part_index;
     char* effective_content;
 
-    char* token = strtok(content, entity_indexer_separator_buffer);
+    char* token = strtok(content, entity_indexer_separator_character);
 
     while (token != NULL) {
       if (part_index == 1) {
@@ -114,12 +101,11 @@ int get_all_persons(const char *file, Person persons[]) {
       }
 
       part_index++;
-      token = strtok(NULL, entity_indexer_separator_buffer);
+      token = strtok(NULL, entity_indexer_separator_character);
     }
     
   } while (!feof(file_pointer));
 
-  free(entity_indexer_separator_buffer);
   fclose(file_pointer);
 
   return amount;
