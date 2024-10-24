@@ -8,11 +8,11 @@
 void render_default_view() {
   clear_screen();
 
-  char *current_work_dir_buffer = getcwd(NULL, 0);
+  char *current_work_dir = getcwd(NULL, 0);
 
   printf("Instituto Federal da Bahia\n");
   printf("\n");
-  printf("Current Work Directory: %s\n", current_work_dir_buffer);
+  printf("Current Work Directory: %s\n", current_work_dir);
   printf("\n");
   printf("1 - Gerenciamento de Alunos\n");
   printf("2 - Gerenciamento de Professores\n");

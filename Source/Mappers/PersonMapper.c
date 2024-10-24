@@ -12,9 +12,7 @@
 void person_from_persistence(Person *person, char *content) {
   char attribute_separator_character[1] = {ATTRIBUTE_SEPARATOR};
   int index = 0;
-  char *token;
-
-  token = strtok(content, attribute_separator_character);
+  char *token = strtok(content, attribute_separator_character);
 
   while (token != NULL) {
     switch (index) {

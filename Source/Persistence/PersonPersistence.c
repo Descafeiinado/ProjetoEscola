@@ -116,7 +116,7 @@ int remove_person(const char *file, char *registration) {
   return 0;
 }
 
-bool person_exists0(const char *file, char* registration) {
+bool person_exists0(const char *file, char *registration) {
   char *final_file_name = concat_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");

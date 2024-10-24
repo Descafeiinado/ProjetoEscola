@@ -63,6 +63,7 @@
     "stdlib.h": "c",
     "stdio.h": "c",
     "handlefetchspecificstudent.h": "c",
-    "handledeletestudent.h": "c"
+    "handledeletestudent.h": "c",
+    "clearscreen.h": "c"
   }
 }
