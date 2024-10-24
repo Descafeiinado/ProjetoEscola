@@ -1,7 +1,11 @@
 #include <stdio.h>
 
 #include "Handlers/HandleCreateStudent.h"
+#include "Handlers/HandleDeleteStudent.h"
+#include "Handlers/HandleDetailStudent.h"
 #include "Handlers/HandleListStudents.h"
+
+#include "Handlers/Shared/HandleFetchSpecificStudent.h"
 
 #include "../DefaultView.h"
 #include "../Utils/ClearScreen.h"
@@ -13,9 +17,10 @@ void render_student_management_view(char *message) {
   printf("Instituto Federal da Bahia - Alunos\n");
   printf("\n");
   printf("1 - Listagem de Alunos\n");
-  printf("2 - Atualizar Aluno\n");
+  printf("2 - Detalhar Aluno\n");
   printf("3 - Cadastrar Aluno\n");
-  printf("4 - Excluir Aluno\n");
+  printf("4 - Atualizar Aluno\n");
+  printf("5 - Excluir Aluno\n");
   printf("\n");
 
   if (message != NULL)
@@ -30,7 +35,7 @@ void render_student_management_view(char *message) {
     scanf("%d", &view_option);
 
     if (view_option < 0 || view_option > 4) {
-      printf("Opção inválida.\n");
+      printf("Opcao invalida.\n");
       continue;
     }
 
@@ -45,12 +50,20 @@ void render_student_management_view(char *message) {
       handle_list_students();
       break;
 
+    case 2:
+      handle_fetch_specific_student(&handle_detail_student);
+      break;
+
     case 3:
       handle_create_student();
       break;
 
+    case 5:
+      handle_fetch_specific_student(&handle_delete_student);
+      break;
+
     default:
-      printf("Opção inválida: %d\n", view_option);
+      printf("Opcao invalida: %d\n", view_option);
       is_awaiting_input = 1;
     }
   }

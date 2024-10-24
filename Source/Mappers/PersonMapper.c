@@ -28,9 +28,7 @@ void person_from_persistence(Person *person, char *content) {
       strcpy(person->identification, token);
       break;
     case 3:
-      if (strlen(token) > 0) {
-        person->gender[0] = token[0];
-      }
+      strcpy(person->gender, token);
       break;
     case 4:
       parse_date(token, &person->birthday);
@@ -47,7 +45,7 @@ void person_from_persistence(Person *person, char *content) {
 void person_to_persistence(char *buffer, Person person) {
   int size = MAX_REGISTRATION_SIZE + 1 + MAX_NAME_SIZE + 1 +
              MAX_IDENTIFICATION_SIZE + 1 + 2 + 10;
-  char content[size];
+  char *content = calloc(1, size);
 
   if (content == NULL) {
     perror("Failed to allocate memory");
@@ -62,4 +60,6 @@ void person_to_persistence(char *buffer, Person person) {
    date_to_string(person.birthday));
 
   strcpy(buffer, content);
+
+  free(content);
 }

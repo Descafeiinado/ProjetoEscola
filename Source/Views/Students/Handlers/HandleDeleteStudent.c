@@ -1,7 +1,5 @@
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "../../../Constants/PersonConstants.h"
 #include "../../../Persistence/PersonPersistence.h"
@@ -9,30 +7,17 @@
 #include "../../Utils/ClearScreen.h"
 #include "../StudentManagementView.h"
 
-extern const char *students_database_file;
-
-void handle_list_students() {
+void handle_delete_student(Person student) {
   fflush(stdin);
   clear_screen();
 
   Person *students;
 
-  printf("Listagem de Alunos\n");
+  printf("Prestes a excluir o aluno '%s - %s', digite:\n", student.registration, student.name);
   printf("\n");
 
-  int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
-
-  if (amount > 0)
-    for (int i = 0; i < amount; i++) {
-      Person student = students[i];
-
-      printf("%s. %s\n", student.registration, student.name);
-    }
-  else
-    printf("Não existem estudantes cadastrados.\n");
-
-  printf("\n");
-  printf("0 - Voltar\n");
+  printf("1 - Para confirmar\n");
+  printf("0 - Para cancelar\n");
 
   int view_option = -1;
   int is_awaiting_input = 1;
@@ -41,7 +26,7 @@ void handle_list_students() {
     scanf("%d", &view_option);
 
     if (view_option < 0 || view_option > 4) {
-      printf("Opção inválida.\n");
+      printf("Opcao invalida.\n");
       continue;
     }
 
@@ -49,11 +34,16 @@ void handle_list_students() {
 
     switch (view_option) {
     case 0:
-      render_student_management_view(NULL);
+      render_student_management_view("Operacao cancelada.");
+      break;
+
+    case 1:
+      remove_person(STUDENTS_DATABASE_FILE, student.registration);
+      render_student_management_view("Estudante excluido com sucesso.");
       break;
 
     default:
-      printf("Opção inválida: %d\n", view_option);
+      printf("Opcao invalida: %d\n", view_option);
       is_awaiting_input = 1;
     }
   }

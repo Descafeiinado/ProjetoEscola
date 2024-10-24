@@ -48,7 +48,7 @@ void parse_date(const char *date_str, Date *date) {
 }
 
 char *date_to_string(Date date) {
-  char *buffer;
+  char *buffer = calloc(1, 11);
 
   sprintf(buffer, "%02d/%02d/%04d", date.day, date.month, date.year);
 

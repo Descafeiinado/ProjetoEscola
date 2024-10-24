@@ -17,7 +17,7 @@ void render_default_view() {
   printf("1 - Gerenciamento de Alunos\n");
   printf("2 - Gerenciamento de Professores\n");
   printf("3 - Gerenciamento de Disciplinas\n");
-  printf("4 - Exibir Relatórios\n");
+  printf("4 - Exibir Relatorios\n");
   printf("\n");
   printf("0 - Sair do Programa\n");
 
@@ -28,7 +28,7 @@ void render_default_view() {
     scanf("%d", &view_option);
 
     if (view_option < 0 || view_option > 4) {
-      printf("Opção inválida.\n");
+      printf("Opcao invalida.\n");
       continue;
     }
 
@@ -43,7 +43,7 @@ void render_default_view() {
       break;
 
     default:
-      printf("Opção inválida: %d\n", view_option);
+      printf("Opcao invalida: %d\n", view_option);
       is_awaiting_input = 1;
     }
   }

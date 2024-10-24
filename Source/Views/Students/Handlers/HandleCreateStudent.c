@@ -1,7 +1,5 @@
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "../../../Constants/PersonConstants.h"
 #include "../../../Mappers/PersonMapper.h"
@@ -10,49 +8,49 @@
 #include "../../Utils/ClearScreen.h"
 #include "../StudentManagementView.h"
 
-extern const char *students_database_file;
-
 void handle_input_student_registration(Person *student) {
-  printf("Insira a matrícula do aluno: ");
+  printf("Insira a matricula do aluno: ");
   scanf(" %32[^\n]", student->registration);
 }
 
 void handle_input_student_identification(Person *student) {
-  regex_t cpf_regex;
-  int regex_result =
-      regcomp(&cpf_regex,
-              "([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|(["
-              "0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
-              REG_EXTENDED);
+  // regex_t cpf_regex;
+  // int regex_result =
+  //     regcomp(&cpf_regex,
+  //             "([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|(["
+  //             "0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})",
+  //             REG_EXTENDED);
 
-  if (regex_result)
-    fprintf(stderr,
-            "AVISO: Não foi possível compilar a expressão regular. Validação "
-            "de CPF desativada.\n");
+  // if (regex_result)
+  //   fprintf(stderr,
+  //           "AVISO: Nao foi possivel compilar a expressao regular. Validacao "
+  //           "de CPF desativada.\n");
 
-  int is_cpf_valid = 0;
+  // int is_cpf_valid = 0;
 
-  while (!is_cpf_valid) {
-    printf("Insira o CPF do aluno: ");
-    scanf(" %14[^\n]", student->identification);
+  // while (!is_cpf_valid) {
+  //   printf("Insira o CPF do aluno: ");
+  //   scanf(" %14[^\n]", student->identification);
 
-    if (!regex_result) {
-      regex_result = regexec(&cpf_regex, student->identification, 0, NULL, 0);
+  //   if (!regex_result) {
+  //     regex_result = regexec(&cpf_regex, student->identification, 0, NULL, 0);
 
-      if (!regex_result) {
-        is_cpf_valid = 1;
-      } else if (regex_result == REG_NOMATCH) {
-        printf("O CPF fornecido é inválido.\n");
-      } else {
-        char cpf_regex_error_buffer[100];
+  //     if (!regex_result) {
+  //       is_cpf_valid = 1;
+  //     } else if (regex_result == REG_NOMATCH) {
+  //       printf("O CPF fornecido e invalido.\n");
+  //     } else {
+  //       char cpf_regex_error_buffer[100];
 
-        regerror(regex_result, &cpf_regex, cpf_regex_error_buffer,
-                 sizeof(cpf_regex_error_buffer));
-        fprintf(stderr, "Regex match failed: %s\n", cpf_regex_error_buffer);
-      }
-    } else
-      is_cpf_valid = 1;
-  }
+  //       regerror(regex_result, &cpf_regex, cpf_regex_error_buffer,
+  //                sizeof(cpf_regex_error_buffer));
+  //       fprintf(stderr, "Regex match failed: %s\n", cpf_regex_error_buffer);
+  //     }
+  //   } else
+  //     is_cpf_valid = 1;
+  // }
+  printf("Insira o CPF do aluno: ");
+  scanf(" %14[^\n]", student->identification);
 }
 
 void handle_input_student_name(Person *student) {
@@ -65,7 +63,7 @@ void handle_input_student_gender(Person *student) {
   char valid_genders[3] = {'M', 'F', 'O'};
 
   while (!is_gender_valid) {
-    printf("Insira o gênero do aluno (M/F/O): ");
+    printf("Insira o genero do aluno (M/F/O): ");
 
     scanf(" %1[^\n]", student->gender);
 
@@ -75,7 +73,7 @@ void handle_input_student_gender(Person *student) {
     }
 
     if (!is_gender_valid)
-      printf("O gênero fornecido é inválido.\n");
+      printf("O genero fornecido e invalido.\n");
   }
 }
 
@@ -91,7 +89,7 @@ void handle_input_student_birthday(Person *student) {
     if (is_date_valid(student->birthday))
       is_birthday_valid = 1;
     else
-      printf("A data de nascimento fornecida é inválida.\n");
+      printf("A data de nascimento fornecida e invalida.\n");
   }
 }
 
@@ -101,7 +99,7 @@ void handle_create_student() {
 
   Person student;
 
-  printf("Formulário de Cadastro de Aluno\n");
+  printf("Formulario de Cadastro de Aluno\n");
   printf("\n");
 
   handle_input_student_registration(&student);
@@ -116,12 +114,12 @@ void handle_create_student() {
     switch (persistence_result) {
     case 1:
       return render_student_management_view(
-          "Erro ao criar estudante: Não foi possível alocar o espaço de "
-          "memória para escrever o conteúdo da entidade.");
+          "Erro ao criar estudante: Nao foi possivel alocar o espaco de "
+          "memoria para escrever o conteúdo da entidade.");
     case 2:
       return render_student_management_view(
-          "Erro ao criar estudante: Não foi "
-          "possível abrir o arquivo de dados. O usuário não foi salvo no Banco "
+          "Erro ao criar estudante: Nao foi "
+          "possivel abrir o arquivo de dados. O usuario nao foi salvo no Banco "
           "de Dados.");
     }
   }

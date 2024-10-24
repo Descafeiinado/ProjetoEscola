@@ -5,7 +5,7 @@
 #include <string.h>
 
 int main(){
-  setlocale(LC_ALL, "Portuguese_Brasil");
+  setlocale(LC_ALL, "en_US.UTF-8");
   render_default_view();
 
   return 0;
