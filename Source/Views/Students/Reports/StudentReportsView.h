@@ -1,0 +1,1 @@
+void render_student_reports_view(char *message);

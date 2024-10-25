@@ -2,10 +2,11 @@
 
 #include "Handlers/HandleCreateStudent.h"
 #include "Handlers/HandleDeleteStudent.h"
-#include "Handlers/HandleDetailStudent.h"
-#include "Handlers/HandleListStudents.h"
+#include "Handlers/HandleUpdateStudent.h"
 
-#include "Handlers/Shared/HandleFetchSpecificStudent.h"
+#include "Reports/StudentReportsView.h"
+
+#include "Shared/HandleFetchSpecificStudent.h"
 
 #include "../DefaultView.h"
 #include "../Utils/ClearScreen.h"
@@ -16,11 +17,10 @@ void render_student_management_view(char *message) {
 
   printf("Instituto Federal da Bahia - Alunos\n");
   printf("\n");
-  printf("1 - Listagem de Alunos\n");
-  printf("2 - Detalhar Aluno\n");
-  printf("3 - Cadastrar Aluno\n");
-  printf("4 - Atualizar Aluno\n");
-  printf("5 - Excluir Aluno\n");
+  printf("1 - Relatorios\n");
+  printf("2 - Cadastrar Aluno\n");
+  printf("3 - Atualizar Aluno\n");
+  printf("4 - Excluir Aluno\n");
   printf("\n");
 
   if (message != NULL)
@@ -47,19 +47,19 @@ void render_student_management_view(char *message) {
       break;
 
     case 1:
-      handle_list_students();
+      render_student_reports_view(NULL);
       break;
 
     case 2:
-      handle_fetch_specific_student(&handle_detail_student);
-      break;
-
-    case 3:
       handle_create_student();
       break;
 
-    case 5:
-      handle_fetch_specific_student(&handle_delete_student);
+    case 3:
+      handle_fetch_specific_student(&handle_update_student, &render_student_management_view);
+      break;
+
+    case 4:
+      handle_fetch_specific_student(&handle_delete_student, &render_student_management_view);
       break;
 
     default:

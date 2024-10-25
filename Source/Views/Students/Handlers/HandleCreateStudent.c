@@ -114,15 +114,18 @@ void handle_create_student() {
     switch (persistence_result) {
     case 1:
       return render_student_management_view(
-          "Erro ao criar estudante: Nao foi possivel alocar o espaco de "
+          "Erro ao criar aluno: Nao foi possivel alocar o espaco de "
           "memoria para escrever o conteúdo da entidade.");
     case 2:
       return render_student_management_view(
-          "Erro ao criar estudante: Nao foi "
+          "Erro ao criar aluno: Nao foi "
           "possivel abrir o arquivo de dados. O usuario nao foi salvo no Banco "
           "de Dados.");
+    case 3:
+      return render_student_management_view(
+          "Erro ao criar aluno: Ja existe um aluno cadastrado com a matricula fornecida.");
     }
   }
 
-  render_student_management_view("Estudante cadastrado com sucesso!");
+  render_student_management_view("Aluno cadastrado com sucesso!");
 }

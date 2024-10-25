@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../../Constants/PersonConstants.h"
-#include "../../../Persistence/PersonPersistence.h"
-#include "../../DefaultView.h"
-#include "../../Utils/ClearScreen.h"
-#include "../StudentManagementView.h"
+#include "../../../../Constants/PersonConstants.h"
+#include "../../../../Persistence/PersonPersistence.h"
+#include "../../../Utils/ClearScreen.h"
+#include "../StudentReportsView.h"
 
 void handle_list_students() {
   fflush(stdin);
@@ -48,7 +47,7 @@ void handle_list_students() {
 
     switch (view_option) {
     case 0:
-      render_student_management_view(NULL);
+      render_student_reports_view(NULL);
       break;
 
     default:
