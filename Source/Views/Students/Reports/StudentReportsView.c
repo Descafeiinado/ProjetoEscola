@@ -2,6 +2,7 @@
 
 #include "Handlers/HandleDetailStudent.h"
 #include "Handlers/HandleListStudents.h"
+#include "Handlers/HandleListStudentsByGender.h"
 
 #include "../Shared/HandleFetchSpecificStudent.h"
 
@@ -14,8 +15,9 @@ void render_student_reports_view(char *message) {
 
   printf("Instituto Federal da Bahia - Relatorio de Alunos\n");
   printf("\n");
-  printf("1 - Listar alunos\n");
-  printf("2 - Detalhar aluno\n");
+  printf("1 - Detalhar aluno\n");
+  printf("2 - Listar alunos\n");
+  printf("3 - Listar alunos por genero\n");
   printf("\n");
   
   if (message != NULL)
@@ -29,7 +31,7 @@ void render_student_reports_view(char *message) {
   while (view_option != 0 && is_awaiting_input == 1) {
     scanf("%d", &view_option);
 
-    if (view_option < 0 || view_option > 2) {
+    if (view_option < 0 || view_option > 3) {
       printf("Opcao invalida.\n");
       continue;
     }
@@ -42,11 +44,15 @@ void render_student_reports_view(char *message) {
       break;
 
     case 1:
-      handle_list_students();
+      handle_fetch_specific_student(&handle_detail_student, &render_student_reports_view);
       break;
 
     case 2:
-      handle_fetch_specific_student(&handle_detail_student, &render_student_reports_view);
+      handle_list_students();
+      break;
+
+    case 3:
+      handle_list_students_by_gender(NULL);
       break;
 
     default:
