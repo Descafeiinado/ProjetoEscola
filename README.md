@@ -7,7 +7,7 @@ Desenvolvido para trabalho na disciplina de Laboratório de Programação (INF02
 
 ### Discentes
 
-> Filipe Lordêlo Fiuza
+> Filipe Lordêlo Fiuza; e
 > Júlio dos Reis Sousa
 
 # Para compilar o projeto:
