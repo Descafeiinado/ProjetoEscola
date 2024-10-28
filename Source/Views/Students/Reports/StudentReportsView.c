@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 #include "Handlers/HandleDetailStudent.h"
-#include "Handlers/HandleListStudents.h"
+#include "Handlers/HandleListStudentsSortedByCreationOrder.h"
+#include "Handlers/HandleListStudentsSortedByBirthday.h"
+#include "Handlers/HandleListStudentsSortedByName.h"
 #include "Handlers/HandleListStudentsByGender.h"
 
 #include "../Shared/HandleFetchSpecificStudent.h"
@@ -18,6 +20,8 @@ void render_student_reports_view(char *message) {
   printf("1 - Detalhar aluno\n");
   printf("2 - Listar alunos\n");
   printf("3 - Listar alunos por genero\n");
+  printf("4 - Listar alunos por ordem alfabetica\n");
+  printf("5 - Listar alunos por data de nascimento\n");
   printf("\n");
   
   if (message != NULL)
@@ -31,7 +35,7 @@ void render_student_reports_view(char *message) {
   while (view_option != 0 && is_awaiting_input == 1) {
     scanf("%d", &view_option);
 
-    if (view_option < 0 || view_option > 3) {
+    if (view_option < 0 || view_option > 5) {
       printf("Opcao invalida.\n");
       continue;
     }
@@ -48,12 +52,20 @@ void render_student_reports_view(char *message) {
       break;
 
     case 2:
-      handle_list_students();
+      handle_list_students_sorted_by_creation_order();
       break;
 
     case 3:
       handle_list_students_by_gender(NULL);
       break;
+    
+    case 4:
+      handle_list_students_sorted_by_name(NULL);
+      break;
+
+    case 5:
+      handle_list_students_sorted_by_birthday(NULL);
+      break;    
 
     default:
       printf("Opcao invalida: %d\n", view_option);

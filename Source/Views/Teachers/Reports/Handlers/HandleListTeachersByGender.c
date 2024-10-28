@@ -1,3 +1,4 @@
+#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,25 +6,25 @@
 #include "../../../../Constants/PersonConstants.h"
 #include "../../../../Persistence/PersonPersistence.h"
 #include "../../../Utils/ClearScreen.h"
-#include "../StudentReportsView.h"
+#include "../TeacherReportsView.h"
 
-void handle_list_students_by_gender(char *message) {
+void handle_list_teachers_by_gender(char *message) {
   fflush(stdin);
   clear_screen();
 
-  Person *students = malloc(100 * sizeof(Person));
+  Person *teachers = malloc(100 * sizeof(Person));
   char *gender = malloc(10 * sizeof(char));
 
   int is_gender_valid = 0;
   char valid_genders[3] = {'M', 'F', 'O'};
 
   while (!is_gender_valid) {
-    printf("Insira o genero do aluno (M/F/O), ou digite 'cancelar' para voltar: ");
+    printf("Insira o genero do professor (M/F/O), ou digite 'cancelar' para voltar: ");
 
     scanf(" %15[^\n]", gender);
 
     if (strcmp(gender, "cancelar") == 0)
-      return render_student_reports_view(NULL);
+      return render_teacher_reports_view(NULL);
 
     for (int i = 0; i < 3 && !is_gender_valid; i++) {
       if (gender[0] == valid_genders[i])
@@ -34,40 +35,40 @@ void handle_list_students_by_gender(char *message) {
       printf("O genero fornecido e invalido.\n");
   }
 
-  int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
+  int amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
 
-  Person *students_by_gender = malloc(amount * sizeof(Person));
-  int students_by_gender_position = 0;
+  Person *teachers_by_gender = malloc(amount * sizeof(Person));
+  int teachers_by_gender_position = 0;
 
   if (amount > 0) 
     for (int i = 0; i < amount; i++) {
-      Person student = students[i];
+      Person teacher = teachers[i];
 
-      if (strcmp(student.gender, gender) == 0) {
-        students_by_gender[students_by_gender_position] = student;
-        students_by_gender_position++;
+      if (strcmp(teacher.gender, gender) == 0) {
+        teachers_by_gender[teachers_by_gender_position] = teacher;
+        teachers_by_gender_position++;
       }
   }
 
   free(gender);
-  free(students);
+  free(teachers);
 
   fflush(stdin);
   clear_screen();
 
-  printf("Listagem de alunos do sexo '%s':\n\n", gender);
+  printf("Listagem de professores do sexo '%s':\n\n", gender);
 
-  if (students_by_gender_position > 0) {
-    for (int i = 0; i < students_by_gender_position; i++) {
-      Person student = students_by_gender[i];
+  if (teachers_by_gender_position > 0) {
+    for (int i = 0; i < teachers_by_gender_position; i++) {
+      Person teacher = teachers_by_gender[i];
 
-      printf("%s. %s\n", student.registration, student.name);
+      printf("%s. %s\n", teacher.registration, teacher.name);
     }
 
     printf("\n");
-    printf("Total de alunos: %d\n", students_by_gender_position);
+    printf("Total de professores: %d\n", teachers_by_gender_position);
   } else
-    printf("Nao existem estudantes cadastrados.\n");
+    printf("Nao existem professores cadastrados.\n");
 
   printf("\n");
   printf("0 - Voltar\n");
@@ -87,7 +88,7 @@ void handle_list_students_by_gender(char *message) {
 
     switch (view_option) {
     case 0:
-      handle_list_students_by_gender(NULL);
+      handle_list_teachers_by_gender(NULL);
       break;
 
     default:

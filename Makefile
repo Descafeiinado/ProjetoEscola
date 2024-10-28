@@ -18,7 +18,7 @@
 all: main
 
 CC = gcc
-override CFLAGS = -IC://msys64/mingw64/include -LC://msys64/mingw64/lib -g -Wno-everything -pthread -lm
+override CFLAGS = -IC://msys64/mingw64/include -LC://msys64/mingw64/lib -g -Wno-everything -pthread -lm -fexec-charset=UTF-8 -finput-charset=UTF-8
 
 SRCS = $(shell dir /s /b *.c)
 HEADERS = $(shell dir /s /b *.h)

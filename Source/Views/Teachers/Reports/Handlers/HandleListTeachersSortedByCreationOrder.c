@@ -4,30 +4,30 @@
 #include "../../../../Constants/PersonConstants.h"
 #include "../../../../Persistence/PersonPersistence.h"
 #include "../../../Utils/ClearScreen.h"
-#include "../StudentReportsView.h"
+#include "../TeacherReportsView.h"
 
-void handle_list_students() {
+void handle_list_teachers_sorted_by_creation_order() {
   fflush(stdin);
   clear_screen();
 
-  Person *students;
+  Person *teachers;
 
-  printf("Listagem de Alunos\n");
+  printf("Listagem de Professores\n");
   printf("\n");
 
-  int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
+  int amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
 
   if (amount > 0) {
     for (int i = 0; i < amount; i++) {
-      Person student = students[i];
+      Person teacher = teachers[i];
 
-      printf("%s. %s\n", student.registration, student.name);
+      printf("%s. %s\n", teacher.registration, teacher.name);
     }
 
     printf("\n");
-    printf("Total de alunos: %d\n", amount);
+    printf("Total de professores: %d\n", amount);
   } else
-    printf("Nao existem estudantes cadastrados.\n");
+    printf("Nao existem professores cadastrados.\n");
 
   printf("\n");
   printf("0 - Voltar\n");
@@ -47,7 +47,7 @@ void handle_list_students() {
 
     switch (view_option) {
     case 0:
-      render_student_reports_view(NULL);
+      render_teacher_reports_view(NULL);
       break;
 
     default:

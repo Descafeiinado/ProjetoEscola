@@ -1,0 +1,1 @@
+void render_general_reports_view();

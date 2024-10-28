@@ -50,11 +50,11 @@ void person_to_persistence(char *buffer, Person person) {
     exit(EXIT_FAILURE);
   }
 
-  sprintf(content, "%s%c%s%c%s%c%c%c%s\0",
+  sprintf(content, "%s%c%s%c%s%c%s%c%s",
    person.registration, ATTRIBUTE_SEPARATOR,
    person.name, ATTRIBUTE_SEPARATOR,
    person.identification, ATTRIBUTE_SEPARATOR, 
-   person.gender[0], ATTRIBUTE_SEPARATOR,
+   person.gender, ATTRIBUTE_SEPARATOR,
    date_to_string(person.birthday));
 
   strcpy(buffer, content);

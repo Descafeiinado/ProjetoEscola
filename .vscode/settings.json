@@ -65,6 +65,10 @@
     "handlefetchspecificstudent.h": "c",
     "handledeletestudent.h": "c",
     "clearscreen.h": "c",
-    "handleliststudents.h": "c"
+    "handleliststudents.h": "c",
+    "personconstants.h": "c",
+    "personpersistence.h": "c",
+    "studentreportsview.h": "c",
+    "handlefetchmonthlybirthdays.h": "c"
   }
 }

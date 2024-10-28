@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "Reports/GeneralReportsView.h"
 #include "Students/StudentManagementView.h"
+#include "Teachers/TeacherManagementView.h"
 #include "Utils/ClearScreen.h"
 
 void render_default_view() {
@@ -38,8 +40,21 @@ void render_default_view() {
     case 0:
       printf("Saindo do programa...\n");
       exit(25565);
+
     case 1:
       render_student_management_view(NULL);
+      break;
+
+    case 2:
+      render_teacher_management_view(NULL);
+      break;
+
+    case 3:
+      printf("Gerenciamento de Disciplinas\n");
+      break;
+
+    case 4:
+      render_general_reports_view();
       break;
 
     default:
