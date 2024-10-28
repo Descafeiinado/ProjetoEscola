@@ -1,4 +1,3 @@
-#include <conio.h>
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>

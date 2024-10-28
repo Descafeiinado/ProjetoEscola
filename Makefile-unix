@@ -1,0 +1,13 @@
+all: main
+
+CC = clang
+override CFLAGS += -g -Wno-everything -pthread -lm
+
+SRCS = $(shell find . -iname "*.c")
+HEADERS = $(shell find . -iname "*.h")
+
+main: $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS) -o "Binaries/$@"
+
+clean:
+	rm -f Binaries/main
