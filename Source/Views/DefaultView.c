@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "Reports/GeneralReportsView.h"
+#include "SharedHandlers/HandleSearchPersons.h"
 #include "Students/StudentManagementView.h"
 #include "Teachers/TeacherManagementView.h"
 #include "Utils/ClearScreen.h"
@@ -41,6 +42,10 @@ void render_default_view() {
     case 0:
       printf("Saindo do programa...\n");
       exit(0);
+
+    case 1:
+      handle_search_persons();
+      break;
 
     case 2:
       render_general_reports_view();

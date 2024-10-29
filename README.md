@@ -55,7 +55,7 @@ Preferencialmente, utilize a imagem do Docker disponível neste repositório. Pa
 
 ### Via Docker Puro
 
-1. Utilize o comando `docker run -it -v ${PWD}/Data:/school/Data descafeiinado/school:1.0`.
+1. Utilize o comando `docker run -it -v ./Data:/school/Data descafeiinado/school:1.0`.
 
 ### Via Docker Compose
 

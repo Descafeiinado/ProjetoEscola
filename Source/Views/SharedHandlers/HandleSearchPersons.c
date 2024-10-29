@@ -1,37 +1,52 @@
-#include <stdbool.h>
+#define MAX_SEARCH_SIZE 24
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../../Constants/PersonConstants.h"
-#include "../../../Entities/Person.h"
-#include "../../../Persistence/PersonPersistence.h"
-#include "../../Utils/ClearScreen.h"
-#include "../GeneralReportsView.h"
+#include "../../Constants/PersonConstants.h"
+#include "../../Persistence/PersonPersistence.h"
+#include "../Utils/ClearScreen.h"
+#include "../DefaultView.h"
 
-void handle_fetch_monthly_birthdays() {
+void handle_search_persons() {
   fflush(stdin);
   clear_screen();
 
   Person *students = malloc(100 * sizeof(Person));
   Person *teachers = malloc(100 * sizeof(Person));
+  
+  char *search = malloc(MAX_SEARCH_SIZE * sizeof(char));
 
-  int month = 0;
-  bool is_month_valid = false;
+  int is_search_valid = 0;
+  int invalidity_reason = 0;
 
-  while (!is_month_valid) {
-    printf("Insira o mes desejado, ou digite '0' para voltar: ");
+  while (!is_search_valid) {
+    printf("Insira o conteudo que voce deseja buscar, ou digite 'cancelar' para voltar: ");
 
-    scanf("%d", &month);
+    scanf(" %15[^\n]", search);
 
-    if (month == 0) 
-      return render_general_reports_view();
+    if (strcmp(search, "cancelar") == 0)
+      return render_default_view(NULL);
+    
+    int search_length = strlen(search);
 
-    if (month >= 1 && month <= 12)
-      is_month_valid = true;
+    is_search_valid = 1;
 
-    if (!is_month_valid)
-      printf("O mes fornecido e invalido.\n");
+    if (search_length < 3) {
+      is_search_valid = 0;
+      invalidity_reason = 1;
+    }
+    
+    if (!is_search_valid)
+      switch (invalidity_reason) {
+      case 1:
+        printf("A busca deve conter no minimo 3 caracteres.\n");
+        break;
+      
+      default:
+        break;
+      }
   }
 
   int students_amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
@@ -47,7 +62,7 @@ void handle_fetch_monthly_birthdays() {
     for (int i = 0; i < students_amount; i++) {
       Person student = students[i];
 
-      if (student.birthday.month == month) {
+      if (strstr(student.name, search) != NULL) {
         valid_students[valid_students_position] = student;
         valid_students_position++;
       }
@@ -57,7 +72,7 @@ void handle_fetch_monthly_birthdays() {
     for (int i = 0; i < teachers_amount; i++) {
       Person teacher = teachers[i];
 
-      if (teacher.birthday.month == month) {
+      if (strstr(teacher.name, search) != NULL) {
         valid_teachers[valid_teachers_position] = teacher;
         valid_teachers_position++;
       }
@@ -69,7 +84,9 @@ void handle_fetch_monthly_birthdays() {
   fflush(stdin);
   clear_screen();
 
-  printf("Listagem de aniversariantes do mes %d:\n\n", month);
+  printf("Listagem de pessoas contendo '%s' no nome:\n\n", search);
+
+  free(search);
 
   if (valid_students_position > 0) {
     for (int i = 0; i < valid_students_position; i++) {
@@ -91,7 +108,7 @@ void handle_fetch_monthly_birthdays() {
 
   if (total > 0) {
     printf("\n");
-    printf("Total de aniversariantes: %d | ", total);
+    printf("Total de resultados: %d | ", total);
 
     if (valid_teachers_position > 0) {
       printf("%d", valid_teachers_position);
@@ -112,7 +129,7 @@ void handle_fetch_monthly_birthdays() {
 
     printf("\n");
   } else
-    printf("Nao foram encontrados aniversariantes para esse mes.\n");
+    printf("Nao foram encontradas pessoas que atendam as buscas.\n");
 
   printf("\n");
   printf("0 - Voltar\n");
@@ -135,7 +152,7 @@ void handle_fetch_monthly_birthdays() {
 
     switch (view_option) {
     case 0:
-      render_general_reports_view(NULL);
+      render_default_view();
       break;
 
     default:

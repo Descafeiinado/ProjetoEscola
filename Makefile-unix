@@ -1,7 +1,7 @@
 all: main
 
-CC = clang
-override CFLAGS += -g -Wno-everything -pthread -lm
+CC = gcc
+override CFLAGS = -g -fexec-charset=UTF-8 -finput-charset=UTF-8
 
 SRCS = $(shell find . -iname "*.c")
 HEADERS = $(shell find . -iname "*.h")

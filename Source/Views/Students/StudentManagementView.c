@@ -6,7 +6,7 @@
 
 #include "Reports/StudentReportsView.h"
 
-#include "Shared/HandleFetchSpecificStudent.h"
+#include "SharedHandlers/HandleFetchSpecificStudent.h"
 
 #include "../DefaultView.h"
 #include "../Utils/ClearScreen.h"

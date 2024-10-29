@@ -6,7 +6,7 @@
 #include "Handlers/HandleListStudentsSortedByName.h"
 #include "Handlers/HandleListStudentsByGender.h"
 
-#include "../Shared/HandleFetchSpecificStudent.h"
+#include "../SharedHandlers/HandleFetchSpecificStudent.h"
 
 #include "../StudentManagementView.h"
 #include "../../Utils/ClearScreen.h"
