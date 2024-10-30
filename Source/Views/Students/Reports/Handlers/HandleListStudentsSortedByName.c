@@ -12,7 +12,7 @@ void handle_list_students_sorted_by_name(char *message) {
   fflush(stdin);
   clear_screen();
 
-  Person *students = malloc(100 * sizeof(Person));
+  Person *students = calloc(1, 100 * sizeof(Person));
 
   int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
 

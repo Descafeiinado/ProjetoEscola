@@ -3,38 +3,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../../../Constants/PersonConstants.h"
-#include "../../../../Persistence/PersonPersistence.h"
+#include "../../../../Constants/CourseConstants.h"
+#include "../../../../Persistence/CoursePersistence.h"
 #include "../../../Utils/ClearScreen.h"
-#include "../TeacherReportsView.h"
+#include "../CourseReportsView.h"
 
-void handle_list_teachers_sorted_by_creation_order() {
+void handle_list_courses_sorted_by_creation_order() {
   fflush(stdin);
   clear_screen();
 
-  Person *teachers = calloc(1, MAX_LISTING_SIZE * sizeof(Person));
+  Course *courses = calloc(1, MAX_LISTING_SIZE * sizeof(Course));
 
-  printf("Listagem de Professores\n");
+  printf("Listagem de Disciplinas\n");
   printf("\n");
 
-  int amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
+  int amount = get_all_courses(courses);
 
   if (amount > 0) {
     for (int i = 0; i < amount; i++) {
-      Person teacher = teachers[i];
+      Course course = courses[i];
 
-      printf("%s. %s\n", teacher.registration, teacher.name);
+      char *s = course.students_amount == 1 ? "" : "s";
+
+      printf("%s. %s (%d aluno%s)\n", course.id, course.name, course.students_amount, s);
     }
 
     printf("\n");
-    printf("Total de professores: %d\n", amount);
+    printf("Total de disciplinas: %d\n", amount);
   } else
-    printf("Nao existem professores cadastrados.\n");
+    printf("Nao existem disciplinas cadastrados.\n");
 
   printf("\n");
   printf("0 - Voltar\n");
 
-  free(teachers);
+  free(courses);
 
   int view_option = -1;
   int is_awaiting_input = 1;
@@ -51,7 +53,7 @@ void handle_list_teachers_sorted_by_creation_order() {
 
     switch (view_option) {
     case 0:
-      render_teacher_reports_view(NULL);
+      render_course_reports_view(NULL);
       break;
 
     default:

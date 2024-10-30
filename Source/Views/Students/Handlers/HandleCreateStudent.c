@@ -14,6 +14,11 @@ void handle_input_student_registration(Person *student) {
 }
 
 void handle_input_student_identification(Person *student) {
+  // Eu implementei a validação de CPF com expressões regulares, mas simplesmente não compila por
+  // causa de um erro de compilação que não consegui resolver. Erro:
+  // PATH_TO_MSYS/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/14.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe:
+  // PATH_TO_SOURCE/Source/Views/Students/Handlers/HandleCreateStudent.c:47:(.text+0x223): undefined reference to `regerror'
+
   // regex_t cpf_regex;
   // int regex_result =
   //     regcomp(&cpf_regex,

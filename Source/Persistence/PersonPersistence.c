@@ -9,11 +9,10 @@
 #define MAX_PERSON_LINE_LENGTH 256
 
 #define ENTITY_SEPARATOR 10
-#define ENTITY_INDEXER_SEPARATOR 62
-// 155
-char *get_database_prefix() { return getcwd(NULL, 0); }
-char *concat_database_file_name(const char *file) {
-  char *database_prefix = get_database_prefix();
+
+char *get_persons_database_prefix() { return getcwd(NULL, 0); }
+char *concat_person_database_file_name(const char *file) {
+  char *database_prefix = get_persons_database_prefix();
   int size = strlen(database_prefix) + strlen(file) + 1;
   
   char *database_file = calloc(1, size);
@@ -24,7 +23,7 @@ char *concat_database_file_name(const char *file) {
 }
 
 bool person_exists0(const char *file, char *registration) {
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
 
@@ -50,6 +49,9 @@ bool person_exists0(const char *file, char *registration) {
 
   fclose(file_pointer);
 
+  free(content);
+  free(final_file_name);
+
   return false;
 }
 
@@ -62,7 +64,7 @@ int persist_person(const char *file, Person person) {
 
   person_to_persistence(serialized_person_buffer, person);
 
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
   FILE *file_pointer = fopen(final_file_name, "a+");
 
   int entity_persistence_buffer_size =
@@ -88,13 +90,14 @@ int persist_person(const char *file, Person person) {
   fclose(file_pointer);
 
   free(entity_persistence_buffer);
+  free(final_file_name);
   free(serialized_person_buffer);
 
   return 0;
 }
 
 int update_person(const char *file, char *registration, Person person) {
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
 
@@ -164,12 +167,13 @@ int update_person(const char *file, char *registration, Person person) {
   }
 
   free(content);
+  free(final_file_name);
 
   return 0;
 }
 
 int remove_person(const char *file, char *registration) {
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
 
@@ -224,12 +228,13 @@ int remove_person(const char *file, char *registration) {
   }
 
   free(content);
+  free(final_file_name);
 
   return 0;
 }
 
 Person get_person(const char *file, char *registration) {
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
 
@@ -255,13 +260,14 @@ Person get_person(const char *file, char *registration) {
 
   fclose(file_pointer);
 
+  free(content);
+  free(final_file_name);
+
   return (Person){};
 }
 
 int get_all_persons(const char *file, Person persons[]) {
-  char entity_indexer_separator_character = ENTITY_INDEXER_SEPARATOR;
-
-  char *final_file_name = concat_database_file_name(file);
+  char *final_file_name = concat_person_database_file_name(file);
 
   FILE *file_pointer = fopen(final_file_name, "r");
 
@@ -285,6 +291,9 @@ int get_all_persons(const char *file, Person persons[]) {
   } while (!feof(file_pointer));
 
   fclose(file_pointer);
+
+  free(content);
+  free(final_file_name);
 
   return amount;
 }

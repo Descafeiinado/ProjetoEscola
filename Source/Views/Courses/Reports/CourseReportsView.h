@@ -1,0 +1,1 @@
+void render_course_reports_view(char *message);

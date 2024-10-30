@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,21 +6,19 @@
 #include "../Entities/Date.h"
 
 // Class generated with the help of the ChatGPT
-int is_leap_year(int year) {
+bool is_leap_year(int year) {
   return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-int is_date_valid(Date date) {
-  int is_day_valid = date.day >= 1 && date.day <= 31;
-  int is_month_valid = date.month >= 1 && date.month <= 12;
-  int is_year_valid = date.year >= 1900 && date.year <= 2100;
+bool is_date_valid(Date date) {
+  bool is_day_valid = date.day >= 1 && date.day <= 31;
+  bool is_month_valid = date.month >= 1 && date.month <= 12;
+  bool is_year_valid = date.year >= 1900 && date.year <= 2100;
 
-  if (!is_day_valid || !is_month_valid || !is_year_valid) {
-    return 0;
-  }
-
+  if (!is_day_valid || !is_month_valid || !is_year_valid) return 0;
+  
   // date specific validations
-  int is_day_valid_for_month = 1;
+  bool is_day_valid_for_month = 1;
 
   switch (date.month) {
   case 2:

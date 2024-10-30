@@ -1,11 +1,14 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "Courses/CourseManagementView.h"
 #include "Reports/GeneralReportsView.h"
 #include "SharedHandlers/HandleSearchPersons.h"
 #include "Students/StudentManagementView.h"
 #include "Teachers/TeacherManagementView.h"
+
 #include "Utils/ClearScreen.h"
 
 void render_default_view() {
@@ -26,9 +29,9 @@ void render_default_view() {
   printf("0 - Sair do Programa\n");
 
   int view_option = -1;
-  int is_awaiting_input = 1;
+  bool is_awaiting_input = true;
 
-  while (view_option != 0 && is_awaiting_input == 1) {
+  while (view_option != 0 && is_awaiting_input) {
     scanf("%d", &view_option);
 
     if (view_option < 0 || view_option > 5) {
@@ -36,7 +39,7 @@ void render_default_view() {
       continue;
     }
 
-    is_awaiting_input = 0;
+    is_awaiting_input = false;
 
     switch (view_option) {
     case 0:
@@ -60,12 +63,12 @@ void render_default_view() {
       break;
 
     case 5:
-      printf("Gerenciamento de Disciplinas\n");
+      render_course_management_view(NULL);
       break;
 
     default:
       printf("Opcao invalida: %d\n", view_option);
-      is_awaiting_input = 1;
+      is_awaiting_input = true;
     }
   }
 }

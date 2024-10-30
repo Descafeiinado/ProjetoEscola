@@ -14,7 +14,7 @@ void handle_fetch_specific_student(void (*then)(Person), void (*back)(char *)) {
   Person student;
   bool is_student_found = false;
 
-  char registration[MAX_REGISTRATION_SIZE];
+  char registration[MAX_PERSON_REGISTRATION_SIZE];
 
   while (!is_student_found) {
     printf("Insira a matricula do aluno, ou digite 'cancelar' para voltar: ");

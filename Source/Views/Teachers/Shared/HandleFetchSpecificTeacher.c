@@ -14,7 +14,7 @@ void handle_fetch_specific_teacher(void (*then)(Person), void (*back)(char *)) {
   Person teacher;
   bool is_teacher_found = false;
 
-  char registration[MAX_REGISTRATION_SIZE];
+  char registration[MAX_PERSON_REGISTRATION_SIZE];
 
   while (!is_teacher_found) {
     printf("Insira a matricula do professor, ou digite 'cancelar' para voltar: ");

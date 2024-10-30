@@ -5,6 +5,7 @@
 #include "Handlers/HandleListStudentsSortedByBirthday.h"
 #include "Handlers/HandleListStudentsSortedByName.h"
 #include "Handlers/HandleListStudentsByGender.h"
+#include "Handlers/HandleListStudentsWithLessThanMinimumCourses.h"
 
 #include "../SharedHandlers/HandleFetchSpecificStudent.h"
 
@@ -22,6 +23,7 @@ void render_student_reports_view(char *message) {
   printf("3 - Listar alunos por genero\n");
   printf("4 - Listar alunos por ordem alfabetica\n");
   printf("5 - Listar alunos por data de nascimento\n");
+  printf("6 - Listar alunos com menos de %d disciplinas\n", MINIMUM_COURSES);
   printf("\n");
   
   if (message != NULL)
@@ -35,7 +37,7 @@ void render_student_reports_view(char *message) {
   while (view_option != 0 && is_awaiting_input == 1) {
     scanf("%d", &view_option);
 
-    if (view_option < 0 || view_option > 5) {
+    if (view_option < 0 || view_option > 6) {
       printf("Opcao invalida.\n");
       continue;
     }
@@ -65,7 +67,11 @@ void render_student_reports_view(char *message) {
 
     case 5:
       handle_list_students_sorted_by_birthday(NULL);
-      break;    
+      break;
+
+    case 6:
+      handle_list_students_with_less_than_minimum_courses();
+      break;
 
     default:
       printf("Opcao invalida: %d\n", view_option);

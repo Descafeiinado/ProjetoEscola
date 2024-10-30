@@ -11,8 +11,8 @@ void handle_list_teachers_by_gender(char *message) {
   fflush(stdin);
   clear_screen();
 
-  Person *teachers = malloc(100 * sizeof(Person));
-  char *gender = malloc(10 * sizeof(char));
+  Person *teachers = calloc(1, 100 * sizeof(Person));
+  char *gender = calloc(1, 10 * sizeof(char));
 
   int is_gender_valid = 0;
   char valid_genders[3] = {'M', 'F', 'O'};
@@ -36,7 +36,7 @@ void handle_list_teachers_by_gender(char *message) {
 
   int amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
 
-  Person *teachers_by_gender = malloc(amount * sizeof(Person));
+  Person *teachers_by_gender = calloc(1, amount * sizeof(Person));
   int teachers_by_gender_position = 0;
 
   if (amount > 0) 

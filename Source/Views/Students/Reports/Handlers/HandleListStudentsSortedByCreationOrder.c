@@ -1,3 +1,5 @@
+#define MAX_LISTING_SIZE 100
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,7 +12,7 @@ void handle_list_students_sorted_by_creation_order() {
   fflush(stdin);
   clear_screen();
 
-  Person *students;
+  Person *students = calloc(1, MAX_LISTING_SIZE * sizeof(Person));
 
   printf("Listagem de Alunos\n");
   printf("\n");
@@ -31,6 +33,8 @@ void handle_list_students_sorted_by_creation_order() {
 
   printf("\n");
   printf("0 - Voltar\n");
+
+  free(students);
 
   int view_option = -1;
   int is_awaiting_input = 1;

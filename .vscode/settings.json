@@ -70,6 +70,17 @@
     "personpersistence.h": "c",
     "studentreportsview.h": "c",
     "handlefetchmonthlybirthdays.h": "c",
-    "defaultview.h": "c"
+    "defaultview.h": "c",
+    "regex": "c",
+    "coursemapper.h": "c",
+    "coursepersistence.h": "c",
+    "system_error": "c",
+    "xlocale": "c",
+    "courseconstants.h": "c",
+    "handlefetchspecificcourse.h": "c",
+    "handledetailcourse.h": "c",
+    "string.h": "c",
+    "coursemanagementview.h": "c",
+    "handleliststudentswithlessthanminimumcourses.h": "c"
   }
 }

@@ -1,45 +1,59 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "HandleListStudentsWithLessThanMinimumCourses.h"
+
 #include "../../../../Constants/PersonConstants.h"
+#include "../../../../Persistence/CoursePersistence.h"
 #include "../../../../Persistence/PersonPersistence.h"
-#include "../../../../Utils/Sorting/PersonComparations.h"
+
 #include "../../../Utils/ClearScreen.h"
 #include "../StudentReportsView.h"
 
-void handle_list_students_sorted_by_birthday(char *message) {
+void handle_list_students_with_less_than_minimum_courses() {
   fflush(stdin);
   clear_screen();
 
   Person *students = calloc(1, 100 * sizeof(Person));
-
+  
   int amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
 
+  Person *filtered_students = calloc(1, amount * sizeof(Person));
+  int filtered_students_position = 0;
+
   if (amount > 0) 
-    qsort(students, amount, sizeof(Person), compare_persons_by_birthday);
+    for (int i = 0; i < amount; i++) {
+      Person student = students[i];
+
+      if (get_all_courses_of_student(student.registration) < MINIMUM_COURSES) {
+        filtered_students[filtered_students_position] = student;
+        filtered_students_position++;
+      }
+  }
+
+  free(students);
 
   fflush(stdin);
   clear_screen();
 
-  printf("Listagem de alunos por data de nascimento:\n\n");
+  printf("Listagem de alunos matriculados em menos de %d disciplinas:\n\n", MINIMUM_COURSES);
 
-  if (amount > 0) {
-    for (int i = 0; i < amount; i++) {
-      Person student = students[i];
+  if (filtered_students_position > 0) {
+    for (int i = 0; i < filtered_students_position; i++) {
+      Person student = filtered_students[i];
 
-      printf("%s. %s - %02d/%02d/%04d\n", student.registration, student.name, student.birthday.day, student.birthday.month, student.birthday.year);
+      printf("%s. %s\n", student.registration, student.name);
     }
 
     printf("\n");
-    printf("Total de alunos: %d\n", amount);
+    printf("Total de alunos: %d\n", filtered_students_position);
   } else
-    printf("Nao existem estudantes cadastrados.\n");
+    printf("Nao existem resultados.\n");
 
   printf("\n");
   printf("0 - Voltar\n");
-
-  free(students);
 
   int view_option = -1;
   int is_awaiting_input = 1;

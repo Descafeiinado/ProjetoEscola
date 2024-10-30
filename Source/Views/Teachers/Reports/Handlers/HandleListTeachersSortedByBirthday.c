@@ -12,7 +12,7 @@ void handle_list_teachers_sorted_by_birthday(char *message) {
   fflush(stdin);
   clear_screen();
 
-  Person *teachers = malloc(100 * sizeof(Person));
+  Person *teachers = calloc(1, 100 * sizeof(Person));
 
   int amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
 

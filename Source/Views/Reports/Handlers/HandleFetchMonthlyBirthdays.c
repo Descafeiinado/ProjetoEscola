@@ -13,8 +13,8 @@ void handle_fetch_monthly_birthdays() {
   fflush(stdin);
   clear_screen();
 
-  Person *students = malloc(100 * sizeof(Person));
-  Person *teachers = malloc(100 * sizeof(Person));
+  Person *students = calloc(1, 100 * sizeof(Person));
+  Person *teachers = calloc(1, 100 * sizeof(Person));
 
   int month = 0;
   bool is_month_valid = false;
@@ -37,8 +37,8 @@ void handle_fetch_monthly_birthdays() {
   int students_amount = get_all_persons(STUDENTS_DATABASE_FILE, students);
   int teachers_amount = get_all_persons(TEACHERS_DATABASE_FILE, teachers);
 
-  Person *valid_students = malloc(students_amount * sizeof(Person));
-  Person *valid_teachers = malloc(teachers_amount * sizeof(Person));
+  Person *valid_students = calloc(1, students_amount * sizeof(Person));
+  Person *valid_teachers = calloc(1, teachers_amount * sizeof(Person));
 
   int valid_students_position = 0;
   int valid_teachers_position = 0;
