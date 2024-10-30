@@ -6,14 +6,13 @@ Desenvolvido para trabalho na disciplina de Laboratório de Programação (INF02
 > Renato Novais
 
 ### Discentes
+> Filipe Lordêlo Fiuza; e
+> Júlio dos Reis Sousa
 
 ### Problemas conhecidos
 - A maioria das variáveis booleanas se encontra como int ao invés do bool do <stdbool.h>;
 - Nenhuma acentuação foi colocada nos menus, não consegui mudar a codificação;
 - Validação de CPF não implementada; favor ler [isto](https://github.com/Descafeiinado/ProjetoEscola/blob/main/Source/Views/Students/Handlers/HandleCreateStudent.c#L14).
-
-> Filipe Lordêlo Fiuza; e
-> Júlio dos Reis Sousa
 
 # Para compilar o projeto:
 ## No Windows
@@ -83,4 +82,4 @@ Caso apresente um problema de permissões, basta utilizar `sudo chmod u+x ./Bina
 Nós dois desenvolvemos versões diferentes, mas estavamos colaborando nas dúvidas e resolução de problemas.
 Este repositório foi desenvolvido por [@Descafeiinado](https://github.com/Descafeiinado), com a ajuda de [@trincv](https://github.com/trincv).
 O repositório da versão desenvolvida por [@trincv](https://github.com/trincv) e com ajuda de [@Descafeiinado](https://github.com/Descafeiinado), pode ser encontrado
-[aqui](https://github.com/trincv/INF029-FilipeFiuza)
+[aqui](https://github.com/trincv/INF029-FilipeFiuza)!
