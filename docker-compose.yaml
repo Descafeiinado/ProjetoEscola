@@ -1,7 +1,7 @@
 version: "3"
 services:
   main:
-    image: school:1.0
+    image: school:1.1
     stdin_open: true
     tty: true
     volumes:

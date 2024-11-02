@@ -81,6 +81,7 @@
     "handledetailcourse.h": "c",
     "string.h": "c",
     "coursemanagementview.h": "c",
-    "handleliststudentswithlessthanminimumcourses.h": "c"
+    "handleliststudentswithlessthanminimumcourses.h": "c",
+    "xstring": "cpp"
   }
 }

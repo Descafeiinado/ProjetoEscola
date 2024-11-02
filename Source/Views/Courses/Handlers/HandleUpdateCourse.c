@@ -63,7 +63,7 @@ void handle_input_update_course_period(Course *course) {
   printf("\n");
 
   printf("Insira o novo semestre da disciplina: ");
-  scanf(" %d", &course->period);
+  scanf("%d", &course->period);
 
   handle_update_course(*course);
 }

@@ -3,8 +3,8 @@ all: main
 CC = gcc
 override CFLAGS = -g -fexec-charset=UTF-8 -finput-charset=UTF-8
 
-SRCS = $(shell dir /s /b *.c)
-HEADERS = $(shell dir /s /b *.h)
+SRCS = $(shell dir Source /s /b *.c)
+HEADERS = $(shell dir Source /s /b *.h)
 main: $(SRCS) $(HEADERS)
 	$(CC) $(CFLAGS) $(SRCS) -o "Binaries\\$@.exe"
 

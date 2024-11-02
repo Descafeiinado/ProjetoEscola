@@ -22,18 +22,18 @@ void handle_input_course_name(Course *course) {
 
 void handle_input_course_period(Course *course) {
   printf("Insira o periodo da disciplina: ");
-  scanf(" %d", &course->period);
+  scanf("%d", &course->period);
 }
 
 void handle_input_course_teacher(Course *course) {
   Person teacher;
   bool is_teacher_found = false;
 
-  char registration[MAX_PERSON_REGISTRATION_SIZE];
+  char *registration = calloc(1, MAX_PERSON_REGISTRATION_SIZE * sizeof(char));
 
   while (!is_teacher_found) {
     printf("Insira a matricula do professor, ou digite 'cancelar' para voltar: ");
-    scanf(" %32[^\n]", &registration);
+    scanf(" %32[^\n]", registration);
 
     if (strcmp(registration, "cancelar") == 0) 
       return render_course_management_view(0);
@@ -51,19 +51,19 @@ void handle_create_course() {
   fflush(stdin);
   clear_screen();
 
-  Course course;
+  Course *course = calloc(1, sizeof(Course));
 
   printf("Formulario de Cadastro de Disciplina\n");
   printf("\n");
 
-  handle_input_course_id(&course);
-  handle_input_course_name(&course);
-  handle_input_course_period(&course);
-  handle_input_course_teacher(&course);
+  handle_input_course_id(course);
+  handle_input_course_name(course);
+  handle_input_course_period(course);
+  handle_input_course_teacher(course);
 
-  course.students_amount = 0;
+  course->students_amount = 0;
 
-  int persistence_result = persist_course(course);
+  int persistence_result = persist_course(*course);
 
   if (persistence_result) {
     switch (persistence_result) {

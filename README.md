@@ -1,5 +1,7 @@
 # Projeto Escola
 
+![Version Badge](https://img.shields.io/badge/version-1.0-purple)
+
 Desenvolvido para trabalho na disciplina de Laboratório de Programação (INF029) do curso de Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia.
 
 ### Docente
@@ -60,7 +62,7 @@ Preferencialmente, utilize a imagem do Docker disponível neste repositório. Pa
 
 ### Via Docker
 
-1. Utilize o comando `docker run -it -v ./Data:/school/Data descafeiinado/school:1.0`.
+1. Utilize o comando `docker run -it -v ./Data:/school/Data descafeiinado/school:1.1`.
 
 ### Via Docker Compose
 

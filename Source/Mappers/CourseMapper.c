@@ -9,6 +9,23 @@
 #include "../Entities/Course.h"
 #include "../Persistence/PersonPersistence.h"
 
+#include "../Utils/StringUtils.h"
+
+char *replace_new_line(char *string) {
+  char *new_string = calloc(1, strlen(string) + 1);
+
+  if (new_string == NULL) {
+    perror("[School]~ Failed to allocate memory");
+    exit(EXIT_FAILURE);
+  }
+
+  strcpy(new_string, string);
+
+  remove_new_line(new_string);
+
+  return new_string;
+}
+
 // Receive a Course and a serialized Course and reconstructs the Course
 void course_from_persistence(Course *course, char *content) {
   memcpy(course->students, (Person[MAX_COURSE_STUDENTS]){{0}}, MAX_COURSE_STUDENTS * sizeof(Person));
@@ -19,7 +36,7 @@ void course_from_persistence(Course *course, char *content) {
   int field_index = 0;
   
   char *course_pointer;
-  char *course_token = strtok_r(content, attribute_separator_character, &course_pointer);
+  char *course_token = strtok(content, attribute_separator_character);
 
   while (course_token != NULL) {
     switch (field_index) {
@@ -35,22 +52,34 @@ void course_from_persistence(Course *course, char *content) {
     case 3:
       strcpy(course->teacher_registration, course_token);
       break;
-    case 4:
+    case 4:      
       int token_length = strlen(course_token);
 
-      if (course_token[token_length - 1] == '\n') course_token[token_length - 1] = '\0';
-
-      if (token_length == 0) break;
+      if (token_length <= 1) {
+        course->students_amount = 0;
+        break;
+      }
       
-      if (!strstr(course_token, ",")) {
-        if (person_exists0(STUDENTS_DATABASE_FILE, course_token)) {
-          course->students[0] = get_person(STUDENTS_DATABASE_FILE, course_token);
+      char string_copy[MAX_PERSON_REGISTRATION_SIZE];
+      
+      strcpy(string_copy, course_token);
+
+      char *string_without_new_line = replace_new_line(string_copy);
+      int token_effective_length = strlen(string_without_new_line);
+      
+      if (token_effective_length == 0) {
+        course->students_amount = 0;
+        break;
+      }
+      
+      if (!strstr(string_without_new_line, "")) {
+        if (person_exists0(STUDENTS_DATABASE_FILE, string_without_new_line)) {
+          course->students[0] = get_person(STUDENTS_DATABASE_FILE, string_without_new_line);
           course->students_amount = 1;
-          break;
         }
       } else {
         char *student_pointer;
-        char *student_token = strtok_r(course_token, student_separator_character, &student_pointer);
+        char *student_token = strtok_r(string_without_new_line, student_separator_character, &student_pointer);
 
         int student_index = 0;
 
@@ -70,7 +99,7 @@ void course_from_persistence(Course *course, char *content) {
       break;
     }
 
-    course_token = strtok_r(NULL, attribute_separator_character, &course_pointer);
+    course_token = strtok(NULL, attribute_separator_character);
     field_index++;
   }
 }

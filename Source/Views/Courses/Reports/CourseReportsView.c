@@ -43,7 +43,7 @@ void render_course_reports_view(char *message) {
       break;
 
     case 1:
-      handle_fetch_specific_course(handle_detail_course, render_course_reports_view);
+      handle_fetch_specific_course(&handle_detail_course, &render_course_reports_view);
       break;
 
     case 2:

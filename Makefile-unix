@@ -3,8 +3,8 @@ all: main
 CC = gcc
 override CFLAGS = -g -fexec-charset=UTF-8 -finput-charset=UTF-8
 
-SRCS = $(shell find . -iname "*.c")
-HEADERS = $(shell find . -iname "*.h")
+SRCS = $(shell find Source -iname "*.c")
+HEADERS = $(shell find Source -iname "*.h")
 
 main: $(SRCS) $(HEADERS)
 	$(CC) $(CFLAGS) $(SRCS) -o "Binaries/$@"

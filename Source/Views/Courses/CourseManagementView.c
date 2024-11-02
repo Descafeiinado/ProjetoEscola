@@ -54,12 +54,11 @@ void render_course_management_view(char *message) {
       break;
     
     case 3:
-      handle_fetch_specific_course(handle_update_course, render_course_management_view);
+      handle_fetch_specific_course(&handle_update_course, &render_course_management_view);
       break;
 
-
     case 4:
-      handle_fetch_specific_course(handle_delete_course, render_course_management_view);
+      handle_fetch_specific_course(&handle_delete_course, &render_course_management_view);
       break;
 
     default:
