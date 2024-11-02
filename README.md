@@ -1,6 +1,6 @@
 # Projeto Escola
 
-![Version Badge](https://img.shields.io/badge/version-1.0-purple)
+![Version Badge](https://img.shields.io/badge/version-1.1-purple)
 
 Desenvolvido para trabalho na disciplina de Laboratório de Programação (INF029) do curso de Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia.
 
